@@ -1,168 +1,318 @@
-CREATE TABLE IF NOT EXISTS covid_project_sql (
-    `Column_1` VARCHAR(78) CHARACTER SET utf8,
-    `Column_2` VARCHAR(50) CHARACTER SET utf8,
-    `Column_3` VARCHAR(76) CHARACTER SET utf8,
-    `Column_4` VARCHAR(64) CHARACTER SET utf8,
-    `Column_5` VARCHAR(59) CHARACTER SET utf8,
-    `Column_6` VARCHAR(25) CHARACTER SET utf8,
-    `Column_7` VARCHAR(22) CHARACTER SET utf8
-);
-INSERT INTO covid_project_sql VALUES ('Covid 19 Data Exploration ',NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('Skills used: Joins',' CTE''s',' Temp Tables',' Windows Functions',' Aggregate Functions',' Creating Views',' Converting Data Types'),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('*/',NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('Select *',NULL,NULL,NULL,NULL,NULL,NULL),
-	('From PortfolioProject..CovidDeaths',NULL,NULL,NULL,NULL,NULL,NULL),
-	('Where continent is not null ',NULL,NULL,NULL,NULL,NULL,NULL),
-	('order by 3','4',NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('-- Select Data that we are going to be starting with',NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('Select Location',' date',' total_cases',' new_cases',' total_deaths',' population',NULL),
-	('From PortfolioProject..CovidDeaths',NULL,NULL,NULL,NULL,NULL,NULL),
-	('Where continent is not null ',NULL,NULL,NULL,NULL,NULL,NULL),
-	('order by 1','2',NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('-- Total Cases vs Total Deaths',NULL,NULL,NULL,NULL,NULL,NULL),
-	('-- Shows likelihood of dying if you contract covid in your country',NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('Select Location',' date',' total_cases','total_deaths',' (total_deaths/total_cases)*100 as DeathPercentage',NULL,NULL),
-	('From PortfolioProject..CovidDeaths',NULL,NULL,NULL,NULL,NULL,NULL),
-	('Where location like ''%states%''',NULL,NULL,NULL,NULL,NULL,NULL),
-	('and continent is not null ',NULL,NULL,NULL,NULL,NULL,NULL),
-	('order by 1','2',NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('-- Total Cases vs Population',NULL,NULL,NULL,NULL,NULL,NULL),
-	('-- Shows what percentage of population infected with Covid',NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('Select Location',' date',' Population',' total_cases','  (total_cases/population)*100 as PercentPopulationInfected',NULL,NULL),
-	('From PortfolioProject..CovidDeaths',NULL,NULL,NULL,NULL,NULL,NULL),
-	('--Where location like ''%states%''',NULL,NULL,NULL,NULL,NULL,NULL),
-	('order by 1','2',NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('-- Countries with Highest Infection Rate compared to Population',NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('Select Location',' Population',' MAX(total_cases) as HighestInfectionCount','  Max((total_cases/population))*100 as PercentPopulationInfected',NULL,NULL,NULL),
-	('From PortfolioProject..CovidDeaths',NULL,NULL,NULL,NULL,NULL,NULL),
-	('--Where location like ''%states%''',NULL,NULL,NULL,NULL,NULL,NULL),
-	('Group by Location',' Population',NULL,NULL,NULL,NULL,NULL),
-	('order by PercentPopulationInfected desc',NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('-- Countries with Highest Death Count per Population',NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('Select Location',' MAX(cast(Total_deaths as int)) as TotalDeathCount',NULL,NULL,NULL,NULL,NULL),
-	('From PortfolioProject..CovidDeaths',NULL,NULL,NULL,NULL,NULL,NULL),
-	('--Where location like ''%states%''',NULL,NULL,NULL,NULL,NULL,NULL),
-	('Where continent is not null ',NULL,NULL,NULL,NULL,NULL,NULL),
-	('Group by Location',NULL,NULL,NULL,NULL,NULL,NULL),
-	('order by TotalDeathCount desc',NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('-- BREAKING THINGS DOWN BY CONTINENT',NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('-- Showing contintents with the highest death count per population',NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('Select continent',' MAX(cast(Total_deaths as int)) as TotalDeathCount',NULL,NULL,NULL,NULL,NULL),
-	('From PortfolioProject..CovidDeaths',NULL,NULL,NULL,NULL,NULL,NULL),
-	('--Where location like ''%states%''',NULL,NULL,NULL,NULL,NULL,NULL),
-	('Where continent is not null ',NULL,NULL,NULL,NULL,NULL,NULL),
-	('Group by continent',NULL,NULL,NULL,NULL,NULL,NULL),
-	('order by TotalDeathCount desc',NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('-- GLOBAL NUMBERS',NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('Select SUM(new_cases) as total_cases',' SUM(cast(new_deaths as int)) as total_deaths',' SUM(cast(new_deaths as int))/SUM(New_Cases)*100 as DeathPercentage',NULL,NULL,NULL,NULL),
-	('From PortfolioProject..CovidDeaths',NULL,NULL,NULL,NULL,NULL,NULL),
-	('--Where location like ''%states%''',NULL,NULL,NULL,NULL,NULL,NULL),
-	('where continent is not null ',NULL,NULL,NULL,NULL,NULL,NULL),
-	('--Group By date',NULL,NULL,NULL,NULL,NULL,NULL),
-	('order by 1','2',NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('-- Total Population vs Vaccinations',NULL,NULL,NULL,NULL,NULL,NULL),
-	('-- Shows Percentage of Population that has recieved at least one Covid Vaccine',NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('Select dea.continent',' dea.location',' dea.date',' dea.population',' vac.new_vaccinations',NULL,NULL),
-	(NULL,' SUM(CONVERT(int','vac.new_vaccinations)) OVER (Partition by dea.Location Order by dea.location',' dea.Date) as RollingPeopleVaccinated',NULL,NULL,NULL),
-	('--',' (RollingPeopleVaccinated/population)*100',NULL,NULL,NULL,NULL,NULL),
-	('From PortfolioProject..CovidDeaths dea',NULL,NULL,NULL,NULL,NULL,NULL),
-	('Join PortfolioProject..CovidVaccinations vac',NULL,NULL,NULL,NULL,NULL,NULL),
-	('	On dea.location = vac.location',NULL,NULL,NULL,NULL,NULL,NULL),
-	('	and dea.date = vac.date',NULL,NULL,NULL,NULL,NULL,NULL),
-	('where dea.continent is not null ',NULL,NULL,NULL,NULL,NULL,NULL),
-	('order by 2','3',NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('-- Using CTE to perform Calculation on Partition By in previous query',NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('With PopvsVac (Continent',' Location',' Date',' Population',' New_Vaccinations',' RollingPeopleVaccinated)',NULL),
-	('as',NULL,NULL,NULL,NULL,NULL,NULL),
-	('(',NULL,NULL,NULL,NULL,NULL,NULL),
-	('Select dea.continent',' dea.location',' dea.date',' dea.population',' vac.new_vaccinations',NULL,NULL),
-	(NULL,' SUM(CONVERT(int','vac.new_vaccinations)) OVER (Partition by dea.Location Order by dea.location',' dea.Date) as RollingPeopleVaccinated',NULL,NULL,NULL),
-	('--',' (RollingPeopleVaccinated/population)*100',NULL,NULL,NULL,NULL,NULL),
-	('From PortfolioProject..CovidDeaths dea',NULL,NULL,NULL,NULL,NULL,NULL),
-	('Join PortfolioProject..CovidVaccinations vac',NULL,NULL,NULL,NULL,NULL,NULL),
-	('	On dea.location = vac.location',NULL,NULL,NULL,NULL,NULL,NULL),
-	('	and dea.date = vac.date',NULL,NULL,NULL,NULL,NULL,NULL),
-	('where dea.continent is not null ',NULL,NULL,NULL,NULL,NULL,NULL),
-	('--order by 2','3',NULL,NULL,NULL,NULL,NULL),
-	(')',NULL,NULL,NULL,NULL,NULL,NULL),
-	('Select *',' (RollingPeopleVaccinated/Population)*100',NULL,NULL,NULL,NULL,NULL),
-	('From PopvsVac',NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('-- Using Temp Table to perform Calculation on Partition By in previous query',NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('DROP Table if exists #PercentPopulationVaccinated',NULL,NULL,NULL,NULL,NULL,NULL),
-	('Create Table #PercentPopulationVaccinated',NULL,NULL,NULL,NULL,NULL,NULL),
-	('(',NULL,NULL,NULL,NULL,NULL,NULL),
-	('Continent nvarchar(255)',NULL,NULL,NULL,NULL,NULL,NULL),
-	('Location nvarchar(255)',NULL,NULL,NULL,NULL,NULL,NULL),
-	('Date datetime',NULL,NULL,NULL,NULL,NULL,NULL),
-	('Population numeric',NULL,NULL,NULL,NULL,NULL,NULL),
-	('New_vaccinations numeric',NULL,NULL,NULL,NULL,NULL,NULL),
-	('RollingPeopleVaccinated numeric',NULL,NULL,NULL,NULL,NULL,NULL),
-	(')',NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('Insert into #PercentPopulationVaccinated',NULL,NULL,NULL,NULL,NULL,NULL),
-	('Select dea.continent',' dea.location',' dea.date',' dea.population',' vac.new_vaccinations',NULL,NULL),
-	(NULL,' SUM(CONVERT(int','vac.new_vaccinations)) OVER (Partition by dea.Location Order by dea.location',' dea.Date) as RollingPeopleVaccinated',NULL,NULL,NULL),
-	('--',' (RollingPeopleVaccinated/population)*100',NULL,NULL,NULL,NULL,NULL),
-	('From PortfolioProject..CovidDeaths dea',NULL,NULL,NULL,NULL,NULL,NULL),
-	('Join PortfolioProject..CovidVaccinations vac',NULL,NULL,NULL,NULL,NULL,NULL),
-	('	On dea.location = vac.location',NULL,NULL,NULL,NULL,NULL,NULL),
-	('	and dea.date = vac.date',NULL,NULL,NULL,NULL,NULL,NULL),
-	('--where dea.continent is not null ',NULL,NULL,NULL,NULL,NULL,NULL),
-	('--order by 2','3',NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('Select *',' (RollingPeopleVaccinated/Population)*100',NULL,NULL,NULL,NULL,NULL),
-	('From #PercentPopulationVaccinated',NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('-- Creating View to store data for later visualizations',NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('Create View PercentPopulationVaccinated as',NULL,NULL,NULL,NULL,NULL,NULL),
-	('Select dea.continent',' dea.location',' dea.date',' dea.population',' vac.new_vaccinations',NULL,NULL),
-	(NULL,' SUM(CONVERT(int','vac.new_vaccinations)) OVER (Partition by dea.Location Order by dea.location',' dea.Date) as RollingPeopleVaccinated',NULL,NULL,NULL),
-	('--',' (RollingPeopleVaccinated/population)*100',NULL,NULL,NULL,NULL,NULL),
-	('From PortfolioProject..CovidDeaths dea',NULL,NULL,NULL,NULL,NULL,NULL),
-	('Join PortfolioProject..CovidVaccinations vac',NULL,NULL,NULL,NULL,NULL,NULL),
-	('	On dea.location = vac.location',NULL,NULL,NULL,NULL,NULL,NULL),
-	('	and dea.date = vac.date',NULL,NULL,NULL,NULL,NULL,NULL),
-	('where dea.continent is not null ',NULL,NULL,NULL,NULL,NULL,NULL),
-	(NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+insert into `covid project (sql)` (`_*`) 
+  values ('Covid 19 Data Exploration ') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Skills used: Joins') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('*/') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Select *') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('From PortfolioProject..CovidDeaths') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Where continent is not null ') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('order by 3') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('-- Select Data that we are going to be starting with') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Select Location') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('From PortfolioProject..CovidDeaths') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Where continent is not null ') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('order by 1') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('-- Total Cases vs Total Deaths') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('-- Shows likelihood of dying if you contract covid in your country') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Select Location') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('From PortfolioProject..CovidDeaths') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Where location like \'%states%\'') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('and continent is not null ') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('order by 1') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('-- Total Cases vs Population') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('-- Shows what percentage of population infected with Covid') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Select Location') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('From PortfolioProject..CovidDeaths') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('--Where location like \'%states%\'') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('order by 1') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('-- Countries with Highest Infection Rate compared to Population') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Select Location') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('From PortfolioProject..CovidDeaths') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('--Where location like \'%states%\'') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Group by Location') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('order by PercentPopulationInfected desc') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('-- Countries with Highest Death Count per Population') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Select Location') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('From PortfolioProject..CovidDeaths') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('--Where location like \'%states%\'') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Where continent is not null ') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Group by Location') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('order by TotalDeathCount desc') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('-- BREAKING THINGS DOWN BY CONTINENT') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('-- Showing contintents with the highest death count per population') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Select continent') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('From PortfolioProject..CovidDeaths') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('--Where location like \'%states%\'') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Where continent is not null ') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Group by continent') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('order by TotalDeathCount desc') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('-- GLOBAL NUMBERS') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Select SUM(new_cases) as total_cases') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('From PortfolioProject..CovidDeaths') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('--Where location like \'%states%\'') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('where continent is not null ') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('--Group By date') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('order by 1') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('-- Total Population vs Vaccinations') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('-- Shows Percentage of Population that has recieved at least one Covid Vaccine') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Select dea.continent') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('--') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('From PortfolioProject..CovidDeaths dea') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Join PortfolioProject..CovidVaccinations vac') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('	On dea.location = vac.location') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('	and dea.date = vac.date') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('where dea.continent is not null ') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('order by 2') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('-- Using CTE to perform Calculation on Partition By in previous query') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('With PopvsVac (Continent') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('as') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('(') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Select dea.continent') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('--') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('From PortfolioProject..CovidDeaths dea') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Join PortfolioProject..CovidVaccinations vac') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('	On dea.location = vac.location') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('	and dea.date = vac.date') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('where dea.continent is not null ') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('--order by 2') ;
+insert into `covid project (sql)` (`_*`) 
+  values (')') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Select *') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('From PopvsVac') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('-- Using Temp Table to perform Calculation on Partition By in previous query') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('DROP Table if exists #PercentPopulationVaccinated') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Create Table #PercentPopulationVaccinated') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('(') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Continent nvarchar(255)') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Location nvarchar(255)') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Date datetime') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Population numeric') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('New_vaccinations numeric') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('RollingPeopleVaccinated numeric') ;
+insert into `covid project (sql)` (`_*`) 
+  values (')') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Insert into #PercentPopulationVaccinated') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Select dea.continent') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('--') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('From PortfolioProject..CovidDeaths dea') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Join PortfolioProject..CovidVaccinations vac') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('	On dea.location = vac.location') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('	and dea.date = vac.date') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('--where dea.continent is not null ') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('--order by 2') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Select *') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('From #PercentPopulationVaccinated') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('-- Creating View to store data for later visualizations') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Create View PercentPopulationVaccinated as') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Select dea.continent') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('--') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('From PortfolioProject..CovidDeaths dea') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('Join PortfolioProject..CovidVaccinations vac') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('	On dea.location = vac.location') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('	and dea.date = vac.date') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('where dea.continent is not null ') ;
+insert into `covid project (sql)` (`_*`) 
+  values ('') ;
